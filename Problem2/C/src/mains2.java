@@ -15,13 +15,13 @@ public class mains2 {
         int max = 0;
         int lastInd = 0;
 
-        for (int i = 0; i < str.size(); i++){
-            if(i == 0) continue;
+        for (int i = 0; i < str.size(); i++) {
+            if (i == 0) continue;
 
-            for(int k = lastInd; k < i; k++){
-                if(str.get(k).equals(str.get(i))){// делаем проверку
+            for (int k = lastInd; k < i; k++) {
+                if (str.get(k).equals(str.get(i))) {// делаем проверку
 
-                    if(max < (i - lastInd)){
+                    if (max < (i - lastInd)) {
                         max = (i - lastInd);
                     }
 
@@ -32,7 +32,7 @@ public class mains2 {
 
         }
 
-        if(max < str.size() - lastInd){
+        if (max < str.size() - lastInd) {
             max = str.size() - lastInd;
         }
 
