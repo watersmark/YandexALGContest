@@ -5,7 +5,7 @@ import java.net.Inet4Address;
 
 public class RealSp2PrA {
 
-    public  static int recFib(int lastEl, int newEl, int lvlNow, int lvlReq){
+    public  static long recFib(long lastEl, long newEl, int lvlNow, int lvlReq){
 
         if(lvlReq == 0 || lvlReq == 1){
             return 1;
@@ -15,7 +15,7 @@ public class RealSp2PrA {
             return newEl;
         }
 
-        return recFib(newEl, lastEl + newEl, lvlNow + 1, lvlReq);
+        return recFib(newEl, (lastEl + newEl) % 10, lvlNow + 1, lvlReq);
 
     }
 
@@ -26,5 +26,7 @@ public class RealSp2PrA {
         int lvl = Integer.parseInt(reader.readLine());
 
         System.out.println(recFib(1, 1, 1, lvl));
+
+
     }
 }
