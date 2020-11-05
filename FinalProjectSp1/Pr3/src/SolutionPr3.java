@@ -4,27 +4,41 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+
 class queOnStack {
 
     // List где хранятся наши очереди-стеки
-    private List<Integer> queList = new ArrayList<Integer>();
+    private List<int[]> queList = new ArrayList<int[]>();
     private int sizeNow;
 
     // Добавляем элемент в очередь
     // Каждый новый элемент очереди является одиночным стеком
     // То есть Мы получаем массив,где каждый элемент это массив из одного элемента
-    public void put(int elem){
-
+    public void put(int elem) {
+        queList.add(new int[]{elem});
+        sizeNow++;
     }
 
-    // Получаем элемент из очереди
-    // Чтобы сохранялся принцип FIFO берём элемент с конца
-    // одиночного массива
-    public void get(){
+    // Получаем элемент из очереди, для очереди принцип
+    // LIFO сохраняется
+    // Чтобы сохранялся принцип FIFO для стека берём элемент с конца
+    // одиночного массива, но так как в стеке всего один элемент всегда
+    // то мы для упрощения указываем индекс 0
+    // Если очередь пустая выведем error
+    public void get() {
+        if(this.sizeNow == 0){
+            System.out.println("error");
+            return;
+        }
 
+        System.out.println(queList.get(0)[0]);
+        queList.remove(0);
+        sizeNow--;
     }
 
-    public void getSize(){
+    // Получаем колличество элементов чейчас
+    //то есть получаем колличество одиночных стеков
+    public void getSize() {
         System.out.println(this.sizeNow);
     }
 
@@ -50,14 +64,13 @@ public class SolutionPr3 {
             String[] command = reader.readLine().split(" ");
 
             if (command[0].equals("put")) {
-
+                que.put(Integer.parseInt(command[1]));
             }
             if (command[0].equals("get")) {
-
+                que.get();
             }
             if (command[0].equals("get_size")) {
-
-
+                que.getSize();
             }
 
 
