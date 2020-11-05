@@ -46,7 +46,9 @@ class Stack {
             listElem.set(listElem.size() - 1, tempResult);
         }
         if (elem.equals("/")) {
-            int tempResult = listElem.get(listElem.size() - 2) / listElem.get(listElem.size() - 1);
+
+            int tempResult = (int) Math.floor((double) listElem.get(listElem.size() - 2) / listElem.get(listElem.size() - 1));
+
             listElem.remove(listElem.size() - 1);
             listElem.set(listElem.size() - 1, tempResult);
         }

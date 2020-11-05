@@ -6,8 +6,10 @@ import java.util.Set;
 public class mains {
     public static void main(String[] args) {
 
-        System.out.println(-3 / 4);
-
+        int a = -3;
+        int b = 4;
+        int c = (int) Math.floor((double) a / b);
+        System.out.println(c);
 
     }
 }
