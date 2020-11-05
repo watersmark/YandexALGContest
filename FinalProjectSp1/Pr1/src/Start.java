@@ -9,8 +9,8 @@ class Stack {
     private int stackSize;
     // Храним данные
     private List<Integer> listElem = new ArrayList<Integer>();
-    // Ascii значения для опреаций загоняем в множество
-    private Set<Integer> setOperation = new HashSet<Integer>(Arrays.asList(42, 43, 45, 47));
+    // Set операндов
+    private Set<String> setOperation = new HashSet<String>(Arrays.asList("+", "*", "-", "/"));
 
     // Результат вычислений
     private int result;
@@ -21,7 +21,7 @@ class Stack {
         for (String elem : elemMass) {
 
             // Проверяем что пришло на вход число или операнд
-            if (setOperation.contains((int) elem.charAt(0))) {
+            if (setOperation.contains(elem)){
                 // Производим полученную операцию
                 setOperation(elem);
             } else {
@@ -36,22 +36,22 @@ class Stack {
     // Выполняем операцию полученную при разборе строки в методе getResult(String[] elemMass)
     private void setOperation(String elem) {
         if (elem.equals("+")) {
-            int tempResult = listElem.get(listElem.size() - 1) + listElem.get(listElem.size() - 2);
+            int tempResult = listElem.get(listElem.size() - 2) + listElem.get(listElem.size() - 1);
             listElem.remove(listElem.size() - 1);
             listElem.set(listElem.size() - 1, tempResult);
         }
         if (elem.equals("-")) {
-            int tempResult = listElem.get(listElem.size() - 1) - listElem.get(listElem.size() - 2);
+            int tempResult = listElem.get(listElem.size() - 2) - listElem.get(listElem.size() - 1);
             listElem.remove(listElem.size() - 1);
             listElem.set(listElem.size() - 1, tempResult);
         }
         if (elem.equals("/")) {
-            int tempResult = listElem.get(listElem.size() - 1) / listElem.get(listElem.size() - 2);
+            int tempResult = listElem.get(listElem.size() - 2) / listElem.get(listElem.size() - 1);
             listElem.remove(listElem.size() - 1);
             listElem.set(listElem.size() - 1, tempResult);
         }
         if (elem.equals("*")) {
-            int tempResult = listElem.get(listElem.size() - 1) * listElem.get(listElem.size() - 2);
+            int tempResult = listElem.get(listElem.size() - 2) * listElem.get(listElem.size() - 1);
             listElem.remove(listElem.size() - 1);
             listElem.set(listElem.size() - 1, tempResult);
         }
