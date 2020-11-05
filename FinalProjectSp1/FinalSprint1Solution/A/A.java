@@ -3,7 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
-// Номер посылки : 39341469
+// Номер посылки: 39341469
 
 class Stack {
     // Размер стэка на данный момент
