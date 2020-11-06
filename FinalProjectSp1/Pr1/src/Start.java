@@ -3,18 +3,39 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
-// Номер посылки : 39341469
+// Номер посылки : 39400948
 
 class Stack {
     // Размер стэка на данный момент
-    private int stackSize;
-    // Храним данные
-    private List<Integer> listElem = new ArrayList<Integer>();
-    // Set операндов
-    private Set<String> setOperation = new HashSet<String>(Arrays.asList("+", "*", "-", "/"));
+    private int stackSizeNow;
 
-    // Результат вычислений
-    private int result;
+    // Массив в котором хранятся наши элементы
+    // Теперь реализация не через ArrayList<>, а через int[]
+    int[] massElem;
+
+    // Конструктор нашего класса Stack
+    // Передаём размер массива
+    // Размер не больше максимального числа элементов
+    public Stack(int size){
+        massElem = new int[size];
+
+    }
+
+    // Реализуем метод добавления в Stack
+    // И увеличивем размер стэка на 1
+    public void add(int elem){
+        massElem[stackSizeNow] = elem;
+        this.stackSizeNow++;
+    }
+
+    // Реализуем метод для взятия элемента
+    // И уменьшаем стэк на 1
+    public int get(){
+        this.stackSizeNow--;
+        return massElem[stackSizeNow];
+
+    }
+
 
     // Считаем результат входной строки
     // Проходимся по строке и действуем по алгоритму
@@ -22,46 +43,56 @@ class Stack {
         for (String elem : elemMass) {
 
             // Проверяем что пришло на вход число или операнд
-            if (setOperation.contains(elem)){
+            if (CommandSet.getSetOperation().contains(elem)){
                 // Производим полученную операцию
                 setOperation(elem);
             } else {
                 // Добавляем элемент на вершину стэка
-                listElem.add(Integer.parseInt(elem));
+                add(Integer.parseInt(elem));
             }
         }
 
-        return listElem.get(0);
+        return massElem[0];
     }
 
     // Выполняем операцию полученную при разборе строки в методе getResult(String[] elemMass)
     private void setOperation(String elem) {
         if (elem.equals("+")) {
-            int tempResult = listElem.get(listElem.size() - 2) + listElem.get(listElem.size() - 1);
-            listElem.remove(listElem.size() - 1);
-            listElem.set(listElem.size() - 1, tempResult);
+            int first = get();
+            int second = get();
+            add(second + first);
         }
         if (elem.equals("-")) {
-            int tempResult = listElem.get(listElem.size() - 2) - listElem.get(listElem.size() - 1);
-            listElem.remove(listElem.size() - 1);
-            listElem.set(listElem.size() - 1, tempResult);
+            int first = get();
+            int second = get();
+            add(second - first);
         }
         if (elem.equals("/")) {
+            int first = get();
+            int second = get();
+            add((int) Math.floor((double) second / first));
 
-            int tempResult = (int) Math.floor((double) listElem.get(listElem.size() - 2) / listElem.get(listElem.size() - 1));
-
-            listElem.remove(listElem.size() - 1);
-            listElem.set(listElem.size() - 1, tempResult);
         }
         if (elem.equals("*")) {
-            int tempResult = listElem.get(listElem.size() - 2) * listElem.get(listElem.size() - 1);
-            listElem.remove(listElem.size() - 1);
-            listElem.set(listElem.size() - 1, tempResult);
+            int first = get();
+            int second = get();
+            add(second * first);
         }
     }
-
-
 }
+
+
+// Класс для проверки, что нам на вход пришёл
+// знак операции
+class CommandSet{
+    // Set операндов
+    private final static Set<String> setOperation = new HashSet<String>(Arrays.asList("+", "*", "-", "/"));
+
+    public static Set<String> getSetOperation() {
+        return setOperation;
+    }
+}
+
 
 // Это входной класс нашей программы
 public class Start {
@@ -73,8 +104,9 @@ public class Start {
         //Разбиваем строку на массив данных
         String[] elemMass = reader.readLine().split(" ");
 
-        // Создаём класс
-        Stack stack = new Stack();
+        // Создаём класс и передаём аргументы необходимые
+        // для создания начального массива
+        Stack stack = new Stack(elemMass.length);
 
         // Передаём данные
         int result  = stack.getResult(elemMass);
