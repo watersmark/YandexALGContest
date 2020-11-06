@@ -44,7 +44,7 @@ public class Sp2PrJAnother {
             return;
         }
         if (lvl == 4) {
-            String str = "0110100110010110";
+            String str = "01101001";
             System.out.println(str.charAt(pos - 1));
             return;
         }
