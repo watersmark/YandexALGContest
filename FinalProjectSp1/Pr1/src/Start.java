@@ -5,6 +5,8 @@ import java.util.*;
 
 // Номер посылки : 39400948
 
+
+// Вариант реализации стэка
 class Stack {
     // Размер стэка на данный момент
     private int stackSizeNow;
@@ -18,7 +20,6 @@ class Stack {
     // Размер не больше максимального числа элементов
     public Stack(int size){
         massElem = new int[size];
-
     }
 
     // Реализуем метод добавления в Stack
@@ -33,52 +34,8 @@ class Stack {
     public int get(){
         this.stackSizeNow--;
         return massElem[stackSizeNow];
-
     }
-
-
-    // Считаем результат входной строки
-    // Проходимся по строке и действуем по алгоритму
-    public int getResult(String[] elemMass) {
-        for (String elem : elemMass) {
-
-            // Проверяем что пришло на вход число или операнд
-            if (CommandSet.getSetOperation().contains(elem)){
-                // Производим полученную операцию
-                setOperation(elem);
-            } else {
-                // Добавляем элемент на вершину стэка
-                add(Integer.parseInt(elem));
-            }
-        }
-
-        return massElem[0];
-    }
-
-    // Выполняем операцию полученную при разборе строки в методе getResult(String[] elemMass)
-    private void setOperation(String elem) {
-        if (elem.equals("+")) {
-            int first = get();
-            int second = get();
-            add(second + first);
-        }
-        if (elem.equals("-")) {
-            int first = get();
-            int second = get();
-            add(second - first);
-        }
-        if (elem.equals("/")) {
-            int first = get();
-            int second = get();
-            add((int) Math.floor((double) second / first));
-
-        }
-        if (elem.equals("*")) {
-            int first = get();
-            int second = get();
-            add(second * first);
-        }
-    }
+    
 }
 
 
@@ -92,6 +49,62 @@ class CommandSet{
         return setOperation;
     }
 }
+
+// Класс для работы с операциями
+class WorkWithOperation{
+    private Stack stack;
+
+    public WorkWithOperation(Stack stack){
+        this.stack = stack;
+    }
+
+    // Считаем результат входной строки
+    // Проходимся по строке и действуем по алгоритму
+    public int getResult(String[] elemMass) {
+        for (String elem : elemMass) {
+
+            // Проверяем что пришло на вход число или операнд
+            if (CommandSet.getSetOperation().contains(elem)){
+                // Производим полученную операцию
+                setOperation(elem);
+            } else {
+                // Добавляем элемент на вершину стэка
+                stack.add(Integer.parseInt(elem));
+            }
+        }
+
+        // Возвращаем последний
+        // элемент стэка
+        return stack.get();
+    }
+
+    // Выполняем операцию полученную при разборе строки в методе getResult(String[] elemMass)
+    private void setOperation(String elem) {
+        if (elem.equals("+")) {
+            int first = stack.get();
+            int second = stack.get();
+            stack.add(second + first);
+        }
+        if (elem.equals("-")) {
+            int first = stack.get();
+            int second = stack.get();
+            stack.add(second - first);
+        }
+        if (elem.equals("/")) {
+            int first = stack.get();
+            int second = stack.get();
+            stack.add((int) Math.floor((double) second / first));
+
+        }
+        if (elem.equals("*")) {
+            int first = stack.get();
+            int second = stack.get();
+            stack.add(second * first);
+        }
+    }
+
+}
+
 
 
 // Это входной класс нашей программы
@@ -108,8 +121,14 @@ public class Start {
         // для создания начального массива
         Stack stack = new Stack(elemMass.length);
 
-        // Передаём данные
-        int result  = stack.getResult(elemMass);
+        // Создаём класс для работы с данными
+        // Передаём в него раннее созданный
+        // Экземпляр стэка
+        WorkWithOperation workData = new WorkWithOperation(stack);
+
+        // Передаём в метод массив элементов
+        int result = workData.getResult(elemMass);
+
 
         // Печатаем результат
         System.out.println(result);
