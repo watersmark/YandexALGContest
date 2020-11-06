@@ -1,45 +1,94 @@
+import javax.management.Query;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+// Посылка номер: 39404993
 
-class queOnStack {
 
-    // List где хранятся наши очереди-стеки
-    private List<int[]> queList = new ArrayList<int[]>();
+// Реализация класса Que
+// В данной реализации сделаем так, чтобы
+// каждый элемент очереди был стеком
+// Для этого реализуем дополнительно класс Stack
+// С методами add, get
+class QueOnStack {
+
+    //Размер очереди на данный момент
     private int sizeNow;
 
-    // Добавляем элемент в очередь
-    // Каждый новый элемент очереди является одиночным стеком
-    // То есть Мы получаем массив,где каждый элемент это массив из одного элемента
-    public void put(int elem) {
-        queList.add(new int[]{elem});
-        sizeNow++;
+    // Позиция хвоста на данный момент
+    private int tail;
+    //Голова очереди
+    private int headQue;
+
+    // Массив где хранятся элементы очереди
+    Stack[] massQue;
+
+    public QueOnStack(int sizeMass){
+        this.massQue = new Stack[sizeMass];
     }
 
-    // Получаем элемент из очереди, для очереди принцип
-    // LIFO сохраняется
-    // Чтобы сохранялся принцип FIFO для стека берём элемент с конца
-    // одиночного массива, но так как в стеке всего один элемент всегда
-    // то мы для упрощения указываем индекс 0
-    // Если очередь пустая выведем error
-    public void get() {
+    // Добавляем элемент в очередь
+    // Используем для этого новый Stack
+    public void put(int elem){
+
+        Stack tempStack = new Stack();
+        tempStack.add(elem);
+
+        massQue[tail] = tempStack;
+        this.tail++;
+        this.sizeNow++;
+    }
+
+    //Получаем жлемент из очереди
+    //Чтобы сохранялся принцип LIFO
+    //Берём элемент из головы очереди
+    //Для этого есть отдельная перемення
+    public void get(){
+
+        // Если очередь пуста, то ошибка
         if(this.sizeNow == 0){
             System.out.println("error");
             return;
         }
 
-        System.out.println(queList.get(0)[0]);
-        queList.remove(0);
-        sizeNow--;
+        System.out.println(massQue[headQue].get());
+        this.headQue++;
+        this.sizeNow--;
     }
 
-    // Получаем колличество элементов чейчас
-    //то есть получаем колличество одиночных стеков
-    public void getSize() {
+    // Получаем число элементов в очереди
+    public void getSize(){
         System.out.println(this.sizeNow);
+    }
+
+
+
+}
+
+// Реализация класса Stack
+class Stack {
+    // Размер стэка на данный момент
+    private int stackSizeNow;
+
+    // Массив в котором хранятся наши элементы
+    // Теперь реализация не через ArrayList<>, а через int[]
+    int[] massElem = new int[1];
+
+    // Реализуем метод добавления в Stack
+    // И увеличивем размер стэка на 1
+    public void add(int elem) {
+        massElem[stackSizeNow] = elem;
+        this.stackSizeNow++;
+    }
+
+    // Реализуем метод для взятия элемента
+    // И уменьшаем стэк на 1
+    public int get() {
+        this.stackSizeNow--;
+        return massElem[stackSizeNow];
     }
 
 }
@@ -53,8 +102,9 @@ public class SolutionPr3 {
         // Считываем число комманд
         int countCommand = Integer.parseInt(reader.readLine());
 
-        //Создаём экземпляр класса queOnStack
-        queOnStack que = new queOnStack();
+        // создаём экземпляр класса queOnStack
+        // передаём кол-во команд, как максимальный размер очереди
+        QueOnStack que = new QueOnStack(countCommand);
 
         // Считываем команды в цикле
         // И выполняем их
@@ -72,7 +122,6 @@ public class SolutionPr3 {
             if (command[0].equals("get_size")) {
                 que.getSize();
             }
-
 
         }
 
