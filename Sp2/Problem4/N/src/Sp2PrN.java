@@ -23,12 +23,12 @@ public class Sp2PrN {
 
         // Случай для взаимнопростых простых чисел
         // gcd(r1, r2) = 1
-        if (r2 == 1) {
-            if (first * s2 + second * t2 == r2) {
-                System.out.println(String.format("%d %d %d", s2, t2, 1));
+        if (r2 == 0) {
+            if (first * s1 + second * t1 == r1) {
+                System.out.println(String.format("%d %d %d", s1, t1, r1));
                 return;
             } else {
-                System.out.println(String.format("%d %d %d", t2, s2, 1));
+                System.out.println(String.format("%d %d %d", t1, s1, r1));
                 return;
             }
         }
