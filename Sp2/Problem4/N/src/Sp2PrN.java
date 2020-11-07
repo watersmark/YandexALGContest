@@ -14,12 +14,11 @@ public class Sp2PrN {
     static int r2New;
     static int s2New;
     static int t2New;
-    static int RTemp;
 
     // Рекурсивный метод
     // Реализуем расширенный алгоритм Евклида
     public static void specNod(int r1, int r2, int s1,
-                               int s2, int t1, int t2, int R) {
+                               int s2, int t1, int t2) {
 
         // Случай для взаимнопростых простых чисел
         // gcd(r1, r2) = 1
@@ -33,30 +32,15 @@ public class Sp2PrN {
             }
         }
 
-        // Случай для невзаимнопростых чисел
-        if (R == 0) {
-            // Делаем проверку на положение
-            // коэффициентов
-            if(first * s1 + second * t1 == r1) {
-                System.out.println(String.format("%d %d %d", s1, t1, r1));
-                return;
-            } else {
-                System.out.println(String.format("%d %d %d", t1, s1, r1));
-                return;
-            }
-        }
-
         // Считаем параметры для новой функции
         qNew = r1 / r2;
         r2New = r1 % r2;
         s2New = s1 - qNew * s2;
         t2New = t1 - qNew * t2;
-        RTemp = r1 % r2;
 
         // Делаем рекурсивный шаг функции
-        specNod(r2, r2New, s2, s2New, t2, t2New, RTemp);
-
-
+        specNod(r2, r2New, s2, s2New, t2, t2New);
+        
     }
 
     public static void main(String[] args) throws IOException {
@@ -72,10 +56,10 @@ public class Sp2PrN {
         // Большего числа в первую ячейку
 
         if(first > second){
-            specNod(first, second, 1, 0, 0, 1, 1);
+            specNod(first, second, 1, 0, 0, 1);
         }
         else{
-            specNod(second, first, 1, 0, 0, 1, 1);
+            specNod(second, first, 1, 0, 0, 1);
         }
 
     }
