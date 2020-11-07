@@ -3,10 +3,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
-// Номер посылки : 39400948
+// Номер посылки : 39436569
 
 
-// Вариант реализации стэка
+// Вариант реализации Stack
 class Stack {
     // Размер стэка на данный момент
     private int stackSizeNow;
@@ -35,7 +35,7 @@ class Stack {
         this.stackSizeNow--;
         return massElem[stackSizeNow];
     }
-    
+
 }
 
 
@@ -110,7 +110,7 @@ class WorkWithOperation{
 // Это входной класс нашей программы
 public class Start {
     public static void main(String[] args) throws IOException {
-
+        int a = 0;
         // Открываем поток на чтение
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 

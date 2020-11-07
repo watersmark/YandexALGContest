@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-// Посылка номер: 39404993
+// Посылка номер: 39437279
 
 
 // Реализация класса Que
@@ -14,31 +14,22 @@ import java.util.List;
 // Для этого реализуем дополнительно класс Stack
 // С методами add, get
 class QueOnStack {
+    // Получаем Стэк при создании экземпляра
+    private Stack tempStack;
 
     //Размер очереди на данный момент
     private int sizeNow;
 
-    // Позиция хвоста на данный момент
-    private int tail;
-    //Голова очереди
-    private int headQue;
 
-    // Массив где хранятся элементы очереди
-    Stack[] massQue;
-
-    public QueOnStack(int sizeMass){
-        this.massQue = new Stack[sizeMass];
+    // Кноструктор очереди
+    public QueOnStack(int sizeMass, Stack stack){
+        this.tempStack = stack;
     }
 
     // Добавляем элемент в очередь
     // Используем для этого новый Stack
     public void put(int elem){
-
-        Stack tempStack = new Stack();
         tempStack.add(elem);
-
-        massQue[tail] = tempStack;
-        this.tail++;
         this.sizeNow++;
     }
 
@@ -54,8 +45,7 @@ class QueOnStack {
             return;
         }
 
-        System.out.println(massQue[headQue].get());
-        this.headQue++;
+        System.out.println(tempStack.get());
         this.sizeNow--;
     }
 
@@ -72,23 +62,33 @@ class QueOnStack {
 class Stack {
     // Размер стэка на данный момент
     private int stackSizeNow;
+    // Берём с стэка новый элемаент
+    private int headStack;
 
     // Массив в котором хранятся наши элементы
     // Теперь реализация не через ArrayList<>, а через int[]
-    int[] massElem = new int[1];
+    int[] massElem;
+
+    // Инициализируем Stack
+    public Stack(int sizeStack){
+        this.massElem = new int[sizeStack];
+        stackSizeNow = sizeStack - 1;
+        headStack = sizeStack - 1;
+    }
 
     // Реализуем метод добавления в Stack
-    // И увеличивем размер стэка на 1
+    // И уменьшаем размер стэка на 1
     public void add(int elem) {
         massElem[stackSizeNow] = elem;
-        this.stackSizeNow++;
+        this.stackSizeNow--;
     }
 
     // Реализуем метод для взятия элемента
-    // И уменьшаем стэк на 1
+    // И уменьшаем голову стэка на 1
     public int get() {
-        this.stackSizeNow--;
-        return massElem[stackSizeNow];
+        int elem =  massElem[headStack];
+        this.headStack--;
+        return elem;
     }
 
 }
@@ -102,9 +102,13 @@ public class SolutionPr3 {
         // Считываем число комманд
         int countCommand = Integer.parseInt(reader.readLine());
 
+        // Инициализируем Stack
+        Stack stack = new Stack(countCommand);
+
         // создаём экземпляр класса queOnStack
         // передаём кол-во команд, как максимальный размер очереди
-        QueOnStack que = new QueOnStack(countCommand);
+        // Так же передаём экземпляр стэка
+        QueOnStack que = new QueOnStack(countCommand, stack);
 
         // Считываем команды в цикле
         // И выполняем их
