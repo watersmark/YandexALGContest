@@ -16,7 +16,7 @@ public class Start2 {
         for (int i = 0; ; i++) {
 
             // Условие выхода из цикла остался один data центр
-            if(zeroStart + zeroEnd == massVolume.length - 1){
+            if(zeroStart + zeroEnd >= massVolume.length - 1){
                 break;
             }
 
@@ -42,6 +42,10 @@ public class Start2 {
                 massVolume[indexMin]--;
                 massVolume[indexMax]--;
                 photo++;
+
+                if(massVolume[indexMax] == 0){
+                    zeroEnd++;
+                }
 
                 // Если можем сделать шаг влево
                 // В остальных случаях курсор стоит на месте
