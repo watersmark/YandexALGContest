@@ -22,6 +22,7 @@ public class ProblemB {
 
 
     // Рекурсивная функция для поиска элемента(общий случай)
+    // это общий случай ниже частный случай
     public static void recLog(int indexNow, int LeftEnd, int RightEnd, boolean isEnd) {
 
         // Теперь перейдём к случаю возврата из рекурсии(Общий случай)
@@ -69,7 +70,7 @@ public class ProblemB {
 
 
     // Рекурсивная функция для поиска элемента(частный случай)
-    // Добавляем стартовый элемент, чтобы контролировать шаги вправо
+    // Чтобы не улететь в левую часть, добавим контроль относительно последнего элемента
     public static void recLogs(int indexNow, int LeftEnd, int RightEnd, boolean isEnd) {
 
         // Теперь перейдём к случаю возврата из рекурсии(Общий случай)
@@ -150,6 +151,7 @@ public class ProblemB {
                 && Integer.parseInt(massElems[massElems.length - 1]) < Integer.parseInt(massElems[0])
                 && Integer.parseInt(massElems[massElems.length - 1]) >= searchElem) {
 
+            // Это особая функция
             recLogs(massElems.length - 1, 0, massElems.length - 1, false);
 
         } // Случай постоянного возрастания, элемента быть не может

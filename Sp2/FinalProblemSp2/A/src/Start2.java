@@ -1,7 +1,16 @@
 import java.util.Arrays;
 import java.util.Scanner;
 
+// Номер посылки: 39550488
+
+
 public class Start2 {
+    // Инициализируем переменные
+    // делаем два курсора по индексам
+    // если один курсор достиг другого, то
+    // курсор indexMax в начало, после нулей
+    // photo это кол-во фото
+    // zeroEnd и zeroStart это кол-во нулей в конце и начале соответственно
 
     static int indexMin;
     static int indexMax;
@@ -13,6 +22,7 @@ public class Start2 {
     // Массив где считаются наши фото
     public static void photoCount(int[] massVolume) {
 
+        // Обрабатываем данные пока не останется один data центр
         for (int i = 0; ; i++) {
 
             // Условие выхода из цикла остался один data центр
