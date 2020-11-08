@@ -2,15 +2,26 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+// Номер посылки: 39573099
+
+
 // Данную задачу можно за log(n)
 // времени решить с помощью рекурсии
+/*!!!!!!!
+
+Реализовано две функции для общего и для частного случая
+
+!!!!!
+ */
+
+
 public class ProblemB {
     // Объявляем переменную для поиска в массиве
     private static int searchElem;
     private static String[] massElems;
 
 
-    // Рекурсивная функция для поиска элемента
+    // Рекурсивная функция для поиска элемента(общий случай)
     public static void recLog(int indexNow, int LeftEnd, int RightEnd, boolean isEnd) {
 
         // Теперь перейдём к случаю возврата из рекурсии(Общий случай)
@@ -54,8 +65,60 @@ public class ProblemB {
             recLog(RightEnd - (int) Math.round(((double) RightEnd - indexNow) / 2), indexNow, RightEnd, isEnd);
         }
 
+    }
+
+
+    // Рекурсивная функция для поиска элемента(частный случай)
+    // Добавляем стартовый элемент, чтобы контролировать шаги вправо
+    public static void recLogs(int indexNow, int LeftEnd, int RightEnd, boolean isEnd) {
+
+        // Теперь перейдём к случаю возврата из рекурсии(Общий случай)
+        // Если ничего не нашли вернём -1
+        // Так же проверим не попали ли мы на нужный нам элемент
+        if (isEnd || Integer.parseInt(massElems[indexNow]) == searchElem) {
+
+            if (Integer.parseInt(massElems[indexNow]) != searchElem) {
+                System.out.println("-1");
+                return;
+            }
+
+            // Печатаем индекс элемента, который нашли
+            System.out.println(indexNow);
+            return;
+        }
+
+        // Рассмотрим шаг рекурсии, каждый шаг
+        // Делим оставшуюся последовательность на
+        // две части и смотрим куда дальше пойдём
+        //Случай точного попадания на элемент уже рассмотрен
+        // Дополнительное условие, чтобы не улететь влево в большие числа
+        if(Integer.parseInt(massElems[indexNow]) <= Integer.parseInt(massElems[massElems.length - 1])) {
+
+            // Двигаемся в левую сторону
+            if (Integer.parseInt(massElems[indexNow]) > searchElem) {
+
+                if ((int) Math.round(((double) indexNow - LeftEnd) / 2) == 1
+                        || (int) Math.round(((double) indexNow - LeftEnd) / 2) == 0) {
+
+                    isEnd = true;
+                }
+
+                recLogs(indexNow - (int) Math.round(((double) indexNow - LeftEnd) / 2), LeftEnd, indexNow, isEnd);
+                return;
+            }
+        }
+
+        // Двигаемся в правую сторону
+        if ((int) Math.round(((double) RightEnd - indexNow) / 2) == 1
+                || (int) Math.round(((double) RightEnd - indexNow) / 2) == 0) {
+
+            isEnd = true;
+        }
+
+        recLogs(RightEnd - (int) Math.round(((double) RightEnd - indexNow) / 2), indexNow, RightEnd, isEnd);
 
     }
+
 
     public static void main(String[] args) throws IOException {
 
@@ -87,7 +150,7 @@ public class ProblemB {
                 && Integer.parseInt(massElems[massElems.length - 1]) < Integer.parseInt(massElems[0])
                 && Integer.parseInt(massElems[massElems.length - 1]) >= searchElem) {
 
-            recLog(massElems.length - 1, 0, massElems.length - 1, false);
+            recLogs(massElems.length - 1, 0, massElems.length - 1, false);
 
         } // Случай постоянного возрастания, элемента быть не может
         else if (Integer.parseInt(massElems[0]) < Integer.parseInt(massElems[massElems.length - 1])) {
