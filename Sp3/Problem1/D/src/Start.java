@@ -88,8 +88,15 @@ public class Start {
             // Если элемент уже есть в множестве
             if (sets.contains(firstMass[i])) continue;
 
-            // бинарный поиск
-            binarySearch(secondMass);
+            // Обрабатывем случай нулевого второго массива
+            try {
+                // бинарный поиск
+                binarySearch(secondMass);
+            }
+            catch (Exception ignored){
+                // По заданию просто пропускаем
+            }
+
         }
 
 
