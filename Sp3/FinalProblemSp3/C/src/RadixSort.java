@@ -18,6 +18,7 @@ public class RadixSort {
     // На каждой иттерации смещение на один влево
     // Числа в масиве от 0 до 9
     private static int[] countMass = new int[10];
+    private static int[] countMassTemp = new int[10];
 
     // Заведём переменную для последнего числа
     // Так же временную переменную для каждого шага внутри
@@ -27,6 +28,7 @@ public class RadixSort {
 
     // Введём переменную для выхода из рекурсии
     private static int recEnd;
+
 
     // метод для сортировки данных (RadixSort)
     // сначала проходимся по массиву и заполняем
@@ -67,7 +69,6 @@ public class RadixSort {
 
     // Метод для сортировки массива
     private static void sortMass(int tenDegree, int[] firstMassDigit, int[] secondMassDigit) {
-        int[] countMassTemp = new int[10];
 
         for (int i = 0; i < firstMassDigit.length; i++) {
             lastDigit = (firstMassDigit[i] % (int) Math.pow(10, tenDegree)) / (int) Math.pow(10, tenDegree - 1);
@@ -91,6 +92,11 @@ public class RadixSort {
             countMass[lastDigit] -= 1;
             countMassTemp[lastDigit] += 1;
         }
+
+        // Очищаем вспомогательный массив
+        // Делаем значения во всех ячейках нулями
+        Arrays.fill(countMassTemp, 0);
+
     }
 
     // Метод для печати массива отсортированного
